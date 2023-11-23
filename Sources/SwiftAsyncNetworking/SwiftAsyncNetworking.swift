@@ -108,8 +108,8 @@ public extension SwiftAsyncNetworking {
     ///   - body: An optional Encodable object to be included as the request body.
     /// - Returns: A decoded object of the specified Response type.
     /// - Throws: An error of type NetworkError if the request or decoding fails.
-    func get<Body: Encodable, Response: Decodable>(url: URL, headers: [String: String], body: Body? = nil) async throws -> Response {
-        try await performRequest(url: url, method: .get, headers: headers, body: body)
+    func get<Response: Decodable>(url: URL, headers: [String: String]) async throws -> Response {
+        try await data(for: try request(url: url, method: .get, headers: headers))
     }
 
     /// Performs an asynchronous POST request to the specified URL with optional headers and a request body.
@@ -121,7 +121,7 @@ public extension SwiftAsyncNetworking {
     /// - Returns: A decoded object of the specified Response type.
     /// - Throws: An error of type NetworkError if the request or decoding fails.
     func post<Body: Encodable, Response: Decodable>(url: URL, headers: [String: String], body: Body? = nil) async throws -> Response {
-        try await performRequest(url: url, method: .post, headers: headers, body: body)
+        try await data(for: try request(url: url, method: .post, headers: headers, body: body))
     }
 
     /// Performs an asynchronous PUT request to the specified URL with optional headers and a request body.
@@ -133,7 +133,7 @@ public extension SwiftAsyncNetworking {
     /// - Returns: A decoded object of the specified Response type.
     /// - Throws: An error of type NetworkError if the request or decoding fails.
     func put<Body: Encodable, Response: Decodable>(url: URL, headers: [String: String], body: Body? = nil) async throws -> Response {
-        try await performRequest(url: url, method: .put, headers: headers, body: body)
+        try await data(for: try request(url: url, method: .put, headers: headers, body: body))
     }
 
     /// Performs an asynchronous PATCH request to the specified URL with optional headers and a request body.
@@ -145,7 +145,7 @@ public extension SwiftAsyncNetworking {
     /// - Returns: A decoded object of the specified Response type.
     /// - Throws: An error of type NetworkError if the request or decoding fails.
     func patch<Body: Encodable, Response: Decodable>(url: URL, headers: [String: String], body: Body? = nil) async throws -> Response {
-        try await performRequest(url: url, method: .patch, headers: headers, body: body)
+        try await data(for: try request(url: url, method: .patch, headers: headers, body: body))
     }
 
     /// Performs an asynchronous DELETE request to the specified URL with optional headers and a request body.
@@ -157,25 +157,6 @@ public extension SwiftAsyncNetworking {
     /// - Returns: A decoded object of the specified Response type.
     /// - Throws: An error of type NetworkError if the request or decoding fails.
     func delete<Body: Encodable, Response: Decodable>(url: URL, headers: [String: String], body: Body? = nil) async throws -> Response {
-        try await performRequest(url: url, method: .delete, headers: headers, body: body)
-    }
-
-    /// Internal method to perform an asynchronous network request with the specified method, URL, headers, and optional body.
-    ///
-    /// - Parameters:
-    ///   - url: The URL for the network request.
-    ///   - method: The HTTP method for the request.
-    ///   - headers: A dictionary containing additional HTTP headers.
-    ///   - body: An optional Encodable object to be included as the request body.
-    /// - Returns: A decoded object of the specified Response type.
-    /// - Throws: An error of type NetworkError if the request or decoding fails.
-    private func performRequest<Body: Encodable, Response: Decodable>(
-        url: URL,
-        method: RestMethod,
-        headers: [String: String],
-        body: Body? = nil
-    ) async throws -> Response {
-        let request = try await self.request(url: url, method: method, headers: headers, body: body)
-        return try await data(for: request)
+        try await data(for: try request(url: url, method: .delete, headers: headers, body: body))
     }
 }
