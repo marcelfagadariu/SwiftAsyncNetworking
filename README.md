@@ -69,7 +69,9 @@ class YourService {
 ## Features
 
 Feature 1: SwiftAsyncNetworking - is your go-to package for asynchronous network operations in Swift.
+
 Feature 2: Logger - A simple logging utility for displaying messages at different log levels.
+
 Feature 3: NetworkError - Enum representing errors that can occur during network operations.
 
 ## License
