@@ -56,7 +56,7 @@ open class SwiftAsyncNetworking {
     /// - Returns: An asynchronous `URLRequest` ready to be used for network requests.
     ///
     /// - Throws: An error if there's an issue creating the request or encoding the body.
-    open func request<Body: Encodable>(url: URL, method: RestMethod, headers: [String: String], body: Body? = nil) async throws -> URLRequest {
+    open func request(url: URL, method: RestMethod, headers: [String: String], body: Encodable? = nil) async throws -> URLRequest {
         var urlRequest = try await request(url: url, method: method, headers: headers)
         if let body = body {
             urlRequest.httpBody = try JSONEncoder().encode(body)
